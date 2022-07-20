@@ -14,6 +14,4 @@ public interface CoinService {
     Coin findCoinById(Long id) throws CoinNotFoundException;
 
     Coin findCoinBySymbol(String symbol) throws CoinNotFoundException;
-
-    void saveAll(List<Coin> coinList);
 }

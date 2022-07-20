@@ -4,27 +4,27 @@ package by.markov.cryptocurrencywatcher.services;
 import by.markov.cryptocurrencywatcher.dao.CoinRepository;
 import by.markov.cryptocurrencywatcher.dao.UserRepository;
 import by.markov.cryptocurrencywatcher.entities.User;
-import org.springframework.beans.factory.annotation.Autowired;
+import by.markov.cryptocurrencywatcher.exceptions.CoinNotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private CoinRepository coinRepository;
+    private final UserRepository userRepository;
+    private final CoinRepository coinRepository;
 
 
     @Override
-    public void saveUser(String username, String symbolOfCurrency) {
+    public void saveUser(String username, String symbolOfCurrency) throws CoinNotFoundException {
         userRepository.save(User.builder()
                 .username(username)
                 .symbolOfCurrency(symbolOfCurrency)
                 .localDateTime(LocalDateTime.now())
-                .priceCurrencyByRegistration(coinRepository.findCoinBySymbolContaining(symbolOfCurrency).getPriceUsd())
+                .priceCurrencyByRegistration(coinRepository.findBySymbol(symbolOfCurrency).orElseThrow(CoinNotFoundException::new).getPriceUsd())
                 .build());
     }
 }

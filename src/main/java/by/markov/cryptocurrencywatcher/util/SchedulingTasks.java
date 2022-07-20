@@ -5,8 +5,8 @@ import by.markov.cryptocurrencywatcher.dao.UserRepository;
 import by.markov.cryptocurrencywatcher.entities.Coin;
 import by.markov.cryptocurrencywatcher.entities.User;
 import by.markov.cryptocurrencywatcher.exceptions.ParseCoinsException;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.core.env.Environment;
@@ -26,14 +26,12 @@ import java.util.stream.Collectors;
 @PropertySource("classpath:application.yaml")
 @EnableScheduling
 @Slf4j
+@RequiredArgsConstructor
 public class SchedulingTasks {
 
-    @Autowired
-    private Environment environment;
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private CoinRepository coinRepository;
+    private final Environment environment;
+    private final UserRepository userRepository;
+    private final CoinRepository coinRepository;
 
     private static final double HUNDRED_PERCENT = 100.0;
     private static final double ONE_PERCENT = 1.0;
@@ -47,14 +45,17 @@ public class SchedulingTasks {
         if (response.getBody() == null) {
             throw new ParseCoinsException();
         }
-        response.getBody().stream().peek(e -> e.setTime(LocalDateTime.now())).forEach(e -> coinRepository.save(e));
+        response.getBody().forEach(e -> {
+            e.setTime(LocalDateTime.now());
+            coinRepository.save(e);
+        });
     }
 
     @Scheduled(fixedRate = 60000)
     public void updateActualPricesForUser() {
         List<User> userListWithActualPrices = userRepository.findAll()
                 .stream()
-                .peek(e -> e.setActualPrice(coinRepository.findCoinBySymbolContaining(e.getSymbolOfCurrency()).getPriceUsd()))
+                .peek(e -> e.setActualPrice(coinRepository.findBySymbol(e.getSymbolOfCurrency()).get().getPriceUsd()))
                 .collect(Collectors.toList());
         userRepository.saveAll(userListWithActualPrices);
     }

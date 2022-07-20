@@ -11,9 +11,9 @@ _______
 ###### Show coins list:
     [GET]localhost:8080/cryptocurrency/api/coins
 ###### Show coin by id:
-    [GET]localhost:8080/cryptocurrency/api/coins/id/{id}
+    [GET]localhost:8080/cryptocurrency/api/coin/id/{id}
 ###### Show coin by symbol:
-    [GET]localhost:8080/cryptocurrency/api/coins/name/{symbol}
+    [GET]localhost:8080/cryptocurrency/api/coin/name/{symbol}
 _______
 #### UserRestController
 ###### User registration:
