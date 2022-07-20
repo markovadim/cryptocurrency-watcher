@@ -1,19 +1,20 @@
 package by.markov.cryptocurrencywatcher.controllers;
 
+import by.markov.cryptocurrencywatcher.exceptions.CoinNotFoundException;
 import by.markov.cryptocurrencywatcher.services.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/cryptocurrency/users")
+@RequiredArgsConstructor
 public class UserRestController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
     @PostMapping
     public void createUser(@RequestParam String username,
-                           @RequestParam String symbol) {
+                           @RequestParam String symbol) throws CoinNotFoundException {
         userService.saveUser(username, symbol);
     }
 }

@@ -3,21 +3,17 @@ package by.markov.cryptocurrencywatcher.services;
 import by.markov.cryptocurrencywatcher.dao.CoinRepository;
 import by.markov.cryptocurrencywatcher.entities.Coin;
 import by.markov.cryptocurrencywatcher.exceptions.CoinNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
-import java.time.LocalDateTime;
 import java.util.List;
 
 
 @Service
+@RequiredArgsConstructor
 public class CoinServiceImpl implements CoinService {
 
-    @Autowired
-    private CoinRepository coinRepository;
-
+    private final CoinRepository coinRepository;
 
     public List<Coin> findAll() {
         return coinRepository.findAll();
@@ -27,11 +23,7 @@ public class CoinServiceImpl implements CoinService {
         return coinRepository.findById(id).orElseThrow(CoinNotFoundException::new);
     }
 
-    public Coin findCoinBySymbol(String symbol) {
-        return coinRepository.findCoinBySymbolContaining(symbol);
-    }
-
-    public void saveAll(List<Coin> coinList) {
-        coinRepository.saveAll(coinList);
+    public Coin findCoinBySymbol(String symbol) throws CoinNotFoundException {
+        return coinRepository.findBySymbol(symbol).orElseThrow(CoinNotFoundException::new);
     }
 }

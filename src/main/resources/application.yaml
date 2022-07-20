@@ -9,3 +9,6 @@ spring:
 
 
 multiplecoinsURL: https://api.coinlore.net/api/ticker/?id=80,90,48543
+logging:
+  file:
+    name: logging.log
