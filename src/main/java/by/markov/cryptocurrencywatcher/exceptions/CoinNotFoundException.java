@@ -1,6 +1,6 @@
 package by.markov.cryptocurrencywatcher.exceptions;
 
-public class CoinNotFoundException extends Exception {
+public class CoinNotFoundException extends RuntimeException {
     public CoinNotFoundException() {
         super("Coin Not Found.");
     }
