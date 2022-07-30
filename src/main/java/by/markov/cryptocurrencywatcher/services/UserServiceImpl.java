@@ -19,8 +19,8 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public void saveUser(String username, String symbolOfCurrency) throws CoinNotFoundException {
-        userRepository.save(User.builder()
+    public User saveUser(String username, String symbolOfCurrency) throws CoinNotFoundException {
+        return userRepository.save(User.builder()
                 .username(username)
                 .symbolOfCurrency(symbolOfCurrency)
                 .localDateTime(LocalDateTime.now())
