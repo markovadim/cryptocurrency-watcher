@@ -1,10 +1,11 @@
-package by.markov.cryptocurrencywatcher.services;
+package by.markov.cryptocurrencywatcher.services.implementations;
 
 
 import by.markov.cryptocurrencywatcher.dao.CoinRepository;
 import by.markov.cryptocurrencywatcher.dao.UserRepository;
 import by.markov.cryptocurrencywatcher.entities.User;
 import by.markov.cryptocurrencywatcher.exceptions.CoinNotFoundException;
+import by.markov.cryptocurrencywatcher.services.interfaces.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

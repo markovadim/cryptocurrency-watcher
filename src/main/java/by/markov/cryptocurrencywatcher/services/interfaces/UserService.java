@@ -1,4 +1,4 @@
-package by.markov.cryptocurrencywatcher.services;
+package by.markov.cryptocurrencywatcher.services.interfaces;
 
 
 import by.markov.cryptocurrencywatcher.entities.User;
