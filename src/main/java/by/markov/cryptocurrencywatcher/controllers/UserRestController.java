@@ -2,7 +2,7 @@ package by.markov.cryptocurrencywatcher.controllers;
 
 import by.markov.cryptocurrencywatcher.entities.User;
 import by.markov.cryptocurrencywatcher.exceptions.CoinNotFoundException;
-import by.markov.cryptocurrencywatcher.services.UserService;
+import by.markov.cryptocurrencywatcher.services.interfaces.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
