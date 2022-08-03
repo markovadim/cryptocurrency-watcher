@@ -5,7 +5,9 @@ _______
 ###### ***Used technology:***
 <sub>-Spring Boot 2.7.1  
 -Spring Data JPA  
--MySQL database</sub>
+-MySQL database  
+-Mapstruct  
+-FeignClient</sub>
 _______
 #### CoinRestController
 ###### Show coins list:
