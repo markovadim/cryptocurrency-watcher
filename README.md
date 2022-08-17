@@ -7,7 +7,8 @@ _______
 -Spring Data JPA  
 -MySQL database  
 -Mapstruct  
--FeignClient</sub>
+-FeignClient  
+-Docker compose</sub>
 _______
 #### CoinRestController
 ###### Show coins list:
