@@ -4,7 +4,6 @@ services:
     container_name: cryptowatcher-app
     restart: always
     image: 200605030904/cryptowatcher-app
-    build: .
     ports:
       - 8080:8080
     environment:
