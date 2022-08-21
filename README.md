@@ -8,7 +8,11 @@ _______
 -MySQL database  
 -Mapstruct  
 -FeignClient  
+-Spring Cloud Config  
 -Docker compose</sub>
+-------
+#### Docker Image App:
+    docker pull 200605030904/cryptowatcher-app:0.1
 _______
 #### CoinRestController
 ###### Show coins list:
