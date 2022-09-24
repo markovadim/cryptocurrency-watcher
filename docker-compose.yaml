@@ -2,21 +2,30 @@ version: "3"
 services:
   app:
     container_name: cryptowatcher-app
-    restart: always
-    image: 200605030904/cryptowatcher-app:0.1
+    image: markov/cryptocurrencywatcher:0.1
     ports:
-      - 8080:8080
+      - "8080:8080"
     environment:
-      MYSQL_HOST: mysqldb
-      MYSQL_USER: root
-      MYSQL_PASSWORD: root
-      MYSQL_PORT: 3306
+      CONFIG_HOST: config-server
+      MYSQL_HOST: db
+    depends_on:
+      - db
+      - config-server
+    restart: unless-stopped
 
-  mysqldb:
-    container_name: mysqldb
+  config-server:
+    container_name: config-server
+    image: markov/cloud-config-server:0.1
+    ports:
+      - "8888:8888"
+    environment:
+      MYSQL_HOST: db
+
+  db:
+    container_name: db
     image: mysql
     ports:
-      - 3307:3306
+      - "3307:3306"
     environment:
-      MYSQL_DATABASE: cryptowatcher
       MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: cryptowatcher

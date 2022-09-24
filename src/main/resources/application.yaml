@@ -4,9 +4,7 @@ spring:
   profiles:
     active: cloud
   config:
-    import: 'optional:configserver:'
-    cloud:
-      config:
-        uri: http://localhost:8888/
-        enabled: true
-        failFast: true
+    import: 'optional:configserver:http://${CONFIG_HOST:localhost}:8888/'
+  cloud:
+    config:
+      enabled: true
