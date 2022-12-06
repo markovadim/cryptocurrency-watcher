@@ -1,4 +1,4 @@
-package by.markov.cryptocurrencywatcher.services.interfaces;
+package by.markov.cryptocurrencywatcher.services;
 
 
 import by.markov.cryptocurrencywatcher.dto.CoinDTO;

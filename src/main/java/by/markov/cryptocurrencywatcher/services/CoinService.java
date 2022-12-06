@@ -1,9 +1,8 @@
-package by.markov.cryptocurrencywatcher.services.implementations;
+package by.markov.cryptocurrencywatcher.services;
 
 import by.markov.cryptocurrencywatcher.dao.CoinRepository;
 import by.markov.cryptocurrencywatcher.entities.Coin;
 import by.markov.cryptocurrencywatcher.exceptions.CoinNotFoundException;
-import by.markov.cryptocurrencywatcher.services.interfaces.CoinService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,9 +11,13 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class CoinServiceImpl implements CoinService {
+public class CoinService {
 
     private final CoinRepository coinRepository;
+
+    public Coin save(Coin coin) {
+        return coinRepository.save(coin);
+    }
 
     public List<Coin> findAll() {
         return coinRepository.findAll();

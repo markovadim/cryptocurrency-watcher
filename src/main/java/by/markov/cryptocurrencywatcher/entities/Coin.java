@@ -12,7 +12,6 @@ import java.time.LocalDateTime;
 public class Coin {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idCoin;
 
     private String symbol;

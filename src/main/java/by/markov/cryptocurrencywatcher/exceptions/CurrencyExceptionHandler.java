@@ -13,7 +13,7 @@ public class CurrencyExceptionHandler {
     @ExceptionHandler(CoinNotFoundException.class)
     public ResponseEntity<?> handleCoinException(CoinNotFoundException e) {
         log.error(e.getMessage());
-        return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body(e.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
     }
 
     @ExceptionHandler(ParseCoinsException.class)

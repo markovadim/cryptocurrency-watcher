@@ -2,14 +2,14 @@ package by.markov.cryptocurrencywatcher.controllers;
 
 import by.markov.cryptocurrencywatcher.dto.UserDTO;
 import by.markov.cryptocurrencywatcher.mapper.UserMapper;
-import by.markov.cryptocurrencywatcher.services.interfaces.UserService;
+import by.markov.cryptocurrencywatcher.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/cryptocurrency/users")
+@RequestMapping("/cryptocurrency/api/v1/users")
 @RequiredArgsConstructor
 public class UserRestController {
 

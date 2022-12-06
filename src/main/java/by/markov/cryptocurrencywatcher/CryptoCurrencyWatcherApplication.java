@@ -10,8 +10,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication
 public class CryptoCurrencyWatcherApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(CryptoCurrencyWatcherApplication.class, args);
-	}
-
+    public static void main(String[] args) {
+        SpringApplication.run(CryptoCurrencyWatcherApplication.class, args);
+    }
 }

@@ -1,16 +1,14 @@
 package by.markov.cryptocurrencywatcher.services;
 
-import by.markov.cryptocurrencywatcher.dao.CoinRepository;
-import by.markov.cryptocurrencywatcher.dao.UserRepository;
 import by.markov.cryptocurrencywatcher.entities.User;
 import by.markov.cryptocurrencywatcher.exceptions.ParseCoinsException;
 import by.markov.cryptocurrencywatcher.mapper.CoinMapper;
-import by.markov.cryptocurrencywatcher.services.interfaces.FeignClientService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -20,10 +18,10 @@ import java.util.stream.Collectors;
 @EnableScheduling
 @Slf4j
 @RequiredArgsConstructor
-public class SchedulingTasks {
+public class SchedulingService {
 
-    private final UserRepository userRepository;
-    private final CoinRepository coinRepository;
+    private final UserService userService;
+    private final CoinService coinService;
     private final CoinMapper coinMapper;
     private final FeignClientService feignClientService;
 
@@ -36,25 +34,26 @@ public class SchedulingTasks {
         feignClientService.getCoins().orElseThrow(ParseCoinsException::new)
                 .forEach(e -> {
                     e.setTime(LocalDateTime.now());
-                    coinRepository.save(coinMapper.toEntity(e));
+                    coinService.save(coinMapper.toEntity(e));
                 });
         updateActualPricesForUser();
         checkPriceDifference();
     }
 
+    @Transactional
     public void updateActualPricesForUser() {
-        List<User> userListWithActualPrices = userRepository.findAll()
+        List<User> userListWithActualPrices = userService.findAll()
                 .stream()
-                .peek(e -> e.setActualPrice(coinRepository.findBySymbol(e.getSymbolOfCurrency()).get().getPriceUsd()))
+                .peek(e -> e.setActualPrice(coinService.findCoinBySymbol(e.getSymbolOfCurrency()).getPriceUsd()))
                 .collect(Collectors.toList());
-        userRepository.saveAll(userListWithActualPrices);
+        userService.saveAll(userListWithActualPrices);
     }
 
     public void checkPriceDifference() {
-        userRepository.findAll()
+        userService.findAll()
                 .forEach(e -> {
-                    double differencePercent = Math.abs(e.getActualPrice() - e.getPriceCurrencyByRegistration()) * SchedulingTasks.HUNDRED_PERCENT / e.getPriceCurrencyByRegistration();
-                    if (differencePercent > SchedulingTasks.ONE_PERCENT) {
+                    double differencePercent = Math.abs(e.getActualPrice() - e.getPriceCurrencyByRegistration()) * SchedulingService.HUNDRED_PERCENT / e.getPriceCurrencyByRegistration();
+                    if (differencePercent > SchedulingService.ONE_PERCENT) {
                         log.warn("Cryptocurrency: {} | Username: {} | Difference: {}%", e.getSymbolOfCurrency().toUpperCase(), e.getUsername(), differencePercent);
                     }
                 });
