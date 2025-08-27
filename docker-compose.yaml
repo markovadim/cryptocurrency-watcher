@@ -1,8 +1,8 @@
 version: "3"
 services:
   app:
+    build: .
     container_name: cryptowatcher-app
-    image: markov/cryptocurrencywatcher:0.1
     ports:
       - "8080:8080"
     environment:
@@ -12,14 +12,6 @@ services:
       - db
       - config-server
     restart: unless-stopped
-
-  config-server:
-    container_name: config-server
-    image: markov/cloud-config-server:0.1
-    ports:
-      - "8888:8888"
-    environment:
-      MYSQL_HOST: db
 
   db:
     container_name: db
